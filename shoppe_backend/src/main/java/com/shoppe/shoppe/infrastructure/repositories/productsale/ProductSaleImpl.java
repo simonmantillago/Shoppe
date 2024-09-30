@@ -41,19 +41,20 @@ public class ProductSaleImpl implements IProductSaleService {
     public Optional<ProductSale> update(ProductSaleId productSaleId, ProductSale productSale) {
         Optional<ProductSale> productSaleOld = productSaleRepository.findById(productSaleId);
         if(productSaleOld.isPresent()){
-           ProductSale productSaleDb =  productSaleOld.orElseThrow();  
-           
-           productSaleDb.setQuantity(productSaleDb.getQuantity());
-           productSaleDb.setStatus(productSale.getStatus());
-           productSaleDb.setTotal(productSaleDb.getTotal());
-           
-           return Optional.of(productSaleRepository.save(productSaleDb));
+            ProductSale productSaleToUpdate = productSaleRepository.save(productSale);
+            productSaleToUpdate.setQuantity(productSale.getQuantity());
+            productSaleToUpdate.setStatus(productSale.getStatus());
+            productSaleToUpdate.setTotal(productSale.getTotal());
+            
+
+           return Optional.of(productSaleRepository.save(productSaleToUpdate));
+   
         }
 
         return Optional.empty();
     }
 
-    @Transactional(readOnly =  true)
+    @Transactional
     @Override
     public Optional<ProductSale> delete(ProductSaleId productSaleId) {
         Optional<ProductSale> productSaleOptional = productSaleRepository.findById(productSaleId);

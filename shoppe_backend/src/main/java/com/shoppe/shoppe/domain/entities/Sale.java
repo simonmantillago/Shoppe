@@ -15,7 +15,6 @@ import lombok.Data;
 public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sale_id")
     private Long id;
 
     @ManyToOne

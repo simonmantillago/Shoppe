@@ -19,11 +19,11 @@ public class Customer {
     @Column(length = 40, nullable = false)
     private String name;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String lastName;
 
-    @Column(columnDefinition = "DECIMAL(10,0)")
-    private float phone;
+    @Column(length = 20)
+    private String phone;
 
     @Column(length = 80)
     private String address;

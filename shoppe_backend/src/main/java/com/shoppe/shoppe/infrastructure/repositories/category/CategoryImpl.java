@@ -51,7 +51,7 @@ public class CategoryImpl implements ICategoryService {
         return Optional.empty();
     }
 
-    @Transactional(readOnly =  true)
+    @Transactional
     @Override
     public Optional<Category> delete(Long id) {
         Optional<Category> categoryOptional = categoryRepository.findById(id);

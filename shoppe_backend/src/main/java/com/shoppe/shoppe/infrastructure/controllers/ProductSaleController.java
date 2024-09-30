@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppe.shoppe.application.services.IProductSaleService;
 import com.shoppe.shoppe.domain.entities.ProductSale;
 import com.shoppe.shoppe.domain.entities.ProductSaleId;
 
+@RestController
+@RequestMapping("/api/productsale")
 public class ProductSaleController {
 
     @Autowired
@@ -26,39 +30,41 @@ public class ProductSaleController {
     public List<ProductSale> list() {
         return productSaleService.findAll();
     }
-    
-    @GetMapping("/{productId}/{saleId}")
-    public ResponseEntity<?> view(@PathVariable Long productId, @PathVariable Long saleId){
-        
-        ProductSaleId productSaleId = new ProductSaleId(productId,saleId);
 
+    @GetMapping("/{productId}/{saleId}")
+    public ResponseEntity<?> view(@PathVariable Long productId, @PathVariable Long saleId) {
+        ProductSaleId productSaleId = new ProductSaleId(productId, saleId);
         Optional<ProductSale> productSaleOptional = productSaleService.findById(productSaleId);
-        if(productSaleOptional.isPresent()){
+        if (productSaleOptional.isPresent()) {
             return ResponseEntity.ok(productSaleOptional.orElseThrow());
         }
         return ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ProductSale productSale){
+    public ResponseEntity<?> create(@RequestBody ProductSale productSale) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productSaleService.save(productSale));
     }
-    
-    // @PutMapping("/{id}")
-    // public ResponseEntity<?> update(@RequestBody ProductSale productSale, @PathVariable Long id) {
-    //     Optional<ProductSale> productSaleOptional = productSaleService.update(id, productSale);
-    //     if (productSaleOptional.isPresent()) {
-    //         return ResponseEntity.status(HttpStatus.CREATED).body(productSaleOptional.orElseThrow());
-    //     }
-    //     return ResponseEntity.notFound().build();
-    // }
 
-    // @DeleteMapping("/{id}")
-    // public ResponseEntity<?> delete(@PathVariable Long id) {
-    //     Optional<ProductSale> productSaleOptional = productSaleService.delete(id);
-    //     if (productSaleOptional.isPresent()) {
-    //         return ResponseEntity.ok(productSaleOptional.orElseThrow());
-    //     }
-    //     return ResponseEntity.notFound().build();
-    // }
+    @PutMapping("/{productId}/{saleId}")
+    public ResponseEntity<?> update(@RequestBody ProductSale productSale, @PathVariable Long productId, @PathVariable Long saleId) {
+        ProductSaleId productSaleId = new ProductSaleId(productId, saleId);
+        Optional<ProductSale> productSaleOptional = productSaleService.findById(productSaleId);
+        if (productSaleOptional.isPresent()) {
+            productSale.setId(productSaleId);
+
+            return ResponseEntity.ok(productSaleService.save(productSale));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{productId}/{saleId}")
+    public ResponseEntity<?> delete(@PathVariable Long productId, @PathVariable Long saleId) {
+        ProductSaleId productSaleId = new ProductSaleId(productId, saleId);
+        Optional<ProductSale> productSaleOptional = productSaleService.delete(productSaleId);
+        if (productSaleOptional.isPresent()) {
+            return ResponseEntity.ok(productSaleOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

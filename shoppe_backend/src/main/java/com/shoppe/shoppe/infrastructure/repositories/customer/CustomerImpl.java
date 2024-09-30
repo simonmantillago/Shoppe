@@ -54,7 +54,7 @@ public class CustomerImpl implements ICustomerService {
         return Optional.empty();
     }
 
-    @Transactional(readOnly =  true)
+    @Transactional
     @Override
     public Optional<Customer> delete(Long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);

@@ -53,7 +53,7 @@ public class SaleImpl implements ISaleService {
         return Optional.empty();
     }
 
-    @Transactional(readOnly =  true)
+    @Transactional
     @Override
     public Optional<Sale> delete(Long id) {
         Optional<Sale> productOptional = productRepository.findById(id);

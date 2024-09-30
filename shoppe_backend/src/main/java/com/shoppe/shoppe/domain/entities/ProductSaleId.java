@@ -12,4 +12,7 @@ public class ProductSaleId implements Serializable  {
 
     private Long saleId;
     private Long productId;
+
+    public ProductSaleId() {}
+
 }
