@@ -8,6 +8,7 @@ body {
   
   .min-h-screen {
     min-height: 100vh;
+    
   }
   
   /* Navigation styles */
@@ -84,6 +85,7 @@ body {
     justify-content: center;  /* Centra los botones horizontalmente */
     gap: 1rem;
     margin-bottom: 1.5rem;
+    padding-top: 20px;
   }
   
   .operation-buttons button {
@@ -194,4 +196,5 @@ body {
     .operation-buttons button {
       flex: 1 0 calc(50% - 0.5rem);
     }
-  }
+  } 
+
